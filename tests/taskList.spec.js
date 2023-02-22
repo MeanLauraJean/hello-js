@@ -45,5 +45,5 @@ test('Add an item to the list', async ({ page }) => {
     await expect(page
         .getByRole('listitem')
         .filter({ has: page.getByText('Buy socks') }))
-        .toBeTruthy;
+        .toBeTruthy();
 });
