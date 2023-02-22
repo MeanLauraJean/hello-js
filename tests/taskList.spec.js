@@ -42,8 +42,6 @@ test('Add an item to the list', async ({ page }) => {
     await textInput.fill('Buy socks');
     const button = page.getByRole('button', { name: 'Add Task' });
     await button.click();
-    await expect(page
-        .getByRole('listitem')
-        .filter({ has: page.getByText('Buy socks') }))
-        .toBeTruthy();
+    const listItems = page.getByRole('listitem').filter({ hasText: 'Buy socks' });
+    await expect(listItems).toHaveCount(1);
 });
