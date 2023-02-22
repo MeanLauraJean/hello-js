@@ -1,0 +1,24 @@
+{
+  "name": "hello-world",
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "start": "vite",
+    "unit": "NODE_OPTIONS=--experimental-vm-modules NODE_NO_WARNINGS=1 jest src/",
+    "e2e": "playwright test --project=chromium",
+    "test": "npm run unit && npm run e2e"
+  },
+  "dependencies": {
+    "vite": "^2.6.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.31.0",
+    "jest": "^29.4.3",
+    "jest-environment-jsdom": "^29.4.3",
+    "xcurl": "^1.8.3"
+  },
+  "jest": {
+    "testEnvironment": "jsdom"
+  },
+  "private": true
+}
