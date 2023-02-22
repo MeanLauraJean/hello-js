@@ -1,6 +1,6 @@
 // @ts-check
-import { test, expect } from '@playwright/test';
-import { defineConfig } from 'vite';
+
+import { defineConfig, devices } from '@playwright/test';
 
 /**
  * Read environment variables from file.
