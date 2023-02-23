@@ -106,21 +106,33 @@ test('Task 58 - Mark ALL incompletes tasks as Done (alternate solution)', async 
 test('Task 59 - Add an item, mark it as Done, then mark it as incomplete', async ({ page }) => {
   await page.goto('http://localhost:3000/');
 
-  // Add item block
-  await page.goto('http://localhost:3000/');
+  // Assert the initial state
+  const listItems = page.getByRole('listitem');
+    await expect(listItems).toHaveText([
+      '✅ Make coffee',
+      '⌛️ Do Laundry',
+      '⌛️ Learn JavaScript',
+    ]);
+
+  // Create a new task
   const textInput = page.getByPlaceholder('Enter a task');
   await textInput.fill('Eat Breakfast');
-  const button = page.getByRole('button', { name: 'Add Task' });
-  await button.click();
-  const addItem = page.getByRole('listitem').filter({ hasText: 'Eat Breakfast' });
-  await expect(addItem).toHaveCount(1);
+  await textInput.press('Enter');
+  await expect(listItems).toHaveCount(4);
 
-  // Mark as Done block
-  await addItem.click();
-  await expect(addItem).toHaveText('✅ Eat Breakfast'); // Could also do: await expect(newItem).toContainText('✅');
+  // Assert the new task is in the incomplete state
+  const newItem = page.getByText('Eat Breakfast');
+  await expect(newItem).toContainText('⌛️');
 
-  // Mark as incomplete block
-  await addItem.click();
-  await expect(addItem).toHaveText('⌛️ Eat Breakfast'); // Could also do:   await expect(newItem).toContainText('⌛️');
+  // Assert text input is empty
+  await expect(textInput).toHaveValue('');
+
+  // Mark as Done 
+  await newItem.click();
+  await expect(newItem).toHaveText('✅ Eat Breakfast'); // Could also do: await expect(newItem).toContainText('✅');
+
+  // Mark as incomplete 
+  await newItem.click();
+  await expect(newItem).toHaveText('⌛️ Eat Breakfast'); // Could also do:   await expect(newItem).toContainText('⌛️');
 
 });
