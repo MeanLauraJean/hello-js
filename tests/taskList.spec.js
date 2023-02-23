@@ -45,3 +45,15 @@ test('Add an item to the list', async ({ page }) => {
     const listItems = page.getByRole('listitem').filter({ hasText: 'Buy socks' });
     await expect(listItems).toHaveCount(1);
 });
+
+test('Mark incomplete tasks as done', async ({ page }) => {
+  await page.goto('http://localhost:3000/');
+  const incompleteListItems = page.locator('⌛️');
+  const incompleteCount = await incompleteListItems.count();
+  if (incompleteCount > 0) {
+    await incompleteListItems.click();
+  }
+  for (let i=0; i< incompleteCount; i++) {
+    await expect(incompleteListItems.nth(i)).toHaveText('✅')
+  }
+});
